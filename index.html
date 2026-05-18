@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marker Madness Suite</title>
+  <style>
+    :root {
+      --bg: #1a1a1a;
+      --card: #2d2d2d;
+      --panel: #333333;
+      --accent: #ffa500;
+      --accent-dim: rgba(255, 165, 0, 0.15);
+      --text: #E2E2E2;
+      --dim: #888888;
+      --border: #404040;
+      --tip-bg: #252525;
+      --features-bg: #222222;
+      --tile-bg: #2a2a2a;
+      --radius: 10px;
+      --font: -apple-system, "Avenir Next", "Avenir", Helvetica, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 64px;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      border-radius: 100px;
+      padding: 4px 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-includes {
+      font-size: clamp(13px, 1.6vw, 16px);
+      color: #888888;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .hero-includes span {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--dim);
+      font-weight: 400;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .hero-meta {
+      font-size: 12px;
+      color: #555555;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Cards Grid ── */
+    .cards-section {
+      padding: 60px 24px 72px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) { .cards-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px 28px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .card-one-liner {
+      font-size: 13px;
+      color: #c0c0c0;
+      line-height: 1.5;
+    }
+
+    .features-label, .tips-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #555555;
+      margin-bottom: 10px;
+    }
+
+    .card-features { flex: 1; }
+
+    .features-batch {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .features-list li {
+      font-size: 13.5px;
+      color: #cccccc;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .features-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .tips-block {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tip {
+      background: var(--tip-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 11px 14px;
+    }
+
+    .tip-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .tip-body {
+      font-size: 12.5px;
+      color: #aaaaaa;
+      line-height: 1.5;
+    }
+
+    .tip-body code, .tile-desc code {
+      font-family: "SF Mono", "Fira Mono", Menlo, monospace;
+      font-size: 11.5px;
+      background: rgba(255, 165, 0, 0.1);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* ── Orange rule ── */
+    .orange-rule {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .orange-rule hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+      opacity: 0.55;
+    }
+
+    /* ── Features You'd Miss ── */
+    .features-section {
+      background: var(--features-bg);
+      padding: 64px 24px 72px;
+    }
+
+    .features-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      font-size: 14px;
+      color: var(--dim);
+    }
+
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 600px) { .tiles-grid { grid-template-columns: 1fr; } }
+
+    .tile {
+      background: var(--tile-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 165, 0, 0.3);
+    }
+
+    .tile-icon {
+      font-size: 22px;
+      min-width: 32px;
+      text-align: center;
+      margin-top: 1px;
+      line-height: 1;
+    }
+
+    .tile-icon.text-icon {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: "SF Mono", Menlo, monospace;
+    }
+
+    .tile-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #e0e0e0;
+      margin-bottom: 3px;
+    }
+
+    .tile-desc {
+      font-size: 12.5px;
+      color: var(--dim);
+      line-height: 1.5;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 36px 24px 40px;
+      background: var(--bg);
+      border-top: 1px solid #222222;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: #444444;
+      letter-spacing: 0.04em;
+    }
+
+    footer span { color: #555555; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <h1>Marker Madness <span>Suite</span></h1>
+    <p class="hero-includes">including &nbsp;<span>Clip Renamer Pro</span>&nbsp; &amp; &nbsp;<span>Track Command</span></p>
+    <p class="hero-subtitle">Three free tools for DaVinci Resolve — built for editors who move fast.</p>
+    <p class="hero-meta">v2026 &nbsp;·&nbsp; Free &nbsp;·&nbsp; Open Source</p>
+  </section>
+
+  <!-- ── Cards ── -->
+  <div class="cards-section">
+    <div class="cards-grid">
+
+      <!-- Card 1: Marker Madness -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-tag">Tool 01</div>
+          <div class="card-title">Marker Madness</div>
+          <div class="card-one-liner">Full Marker Management For DaVinci Resolve.<br>Now There's Nothing You Can't Do With A Marker.</div>
+        </div>
+
+        <div class="card-features">
+          <div class="features-label">Features</div>
+          <div class="features-batch">BATCH CHANGE ANYTHING!!</div>
+          <ul class="features-list">
+            <li>Browse all markers with color, timecode, name, note, and duration</li>
+            <li>Inline editing — click any name or note cell to edit directly</li>
+            <li>Sort and filter by color, keyword, or timecode range</li>
+            <li>Batch rename with find/replace, prefix/suffix, case, trim, and counter</li>
+            <li>Right-click the color swatch to change color; right-click name or note to edit</li>
+            <li>Copy markers across timelines and paste at playhead</li>
+            <li>Float on Top keeps the window visible over Resolve</li>
+            <li>Auto-refreshes when you click back in</li>
+          </ul>
+        </div>
+
+        <div class="tips-block">
+          <div class="tips-label">Pro Tips</div>
+
+          <div class="tip">
+            <div class="tip-title">Step Counter — the middle number trick</div>
+            <div class="tip-body">Counter starts at Start × Step. Set Start:1, Step:10, Digits:3 → <code>010</code>, <code>020</code>, <code>030</code>. Perfect for VFX shot numbering.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">After Counter position</div>
+            <div class="tip-body">Choose "After counter" in the Add field to place text after the number: <code>ShotName_010_VFX</code> in one pass.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">Marker Renamer auto-refreshes</div>
+            <div class="tip-body">Select different markers, click back into the Renamer panel — preview updates automatically to reflect your new selection.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Clip Renamer Pro -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-tag">Tool 02</div>
+          <div class="card-title">Clip Renamer Pro</div>
+          <div class="card-one-liner">Batch Rename Media Pool Clips And Timelines With Live Preview.</div>
+        </div>
+
+        <div>
+          <div class="features-label">Features</div>
+          <ul class="features-list">
+            <li>Rename clips, timelines, or both in one pass</li>
+            <li>Find &amp; replace, add prefix/suffix, or replace entire name</li>
+            <li>Counter with configurable digits, start, step, and position</li>
+            <li>Trim characters from the start or end of names</li>
+            <li>UPPERCASE / lowercase / Title Case / Remove digits</li>
+            <li>Live before→after preview updates as you type</li>
+            <li>Undo last batch or restore all original names</li>
+            <li>Cmd+Z keyboard undo</li>
+          </ul>
+        </div>
+
+        <div class="tips-block">
+          <div class="tips-label">Pro Tips</div>
+
+          <div class="tip">
+            <div class="tip-title">Start × Step = first counter value</div>
+            <div class="tip-body">Counter begins at Start × Step, not Start. Start:1 Step:10 → <code>010</code>, <code>020</code>, <code>030</code>. Start:1 Step:1 → <code>01</code>, <code>02</code>, <code>03</code>.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">"After counter" — text after the number</div>
+            <div class="tip-body">Add position "After counter" places your text right after the digits: <code>ClipName_010_VFX</code>, <code>ClipName_020_VFX</code>.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">Nothing in the preview? Select clips first.</div>
+            <div class="tip-body">Only clips selected in the Media Pool appear. Select in Resolve, then hit Refresh.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Track Command -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-tag">Tool 03</div>
+          <div class="card-title">Track Command</div>
+          <div class="card-one-liner">Rename, Recolor, And Manage Tracks In The Current Timeline.</div>
+        </div>
+
+        <div>
+          <div class="features-label">Features</div>
+          <ul class="features-list">
+            <li>Audio Tracks | Video Tracks | Rename Operations — three-column layout</li>
+            <li>Same full rename engine as Clip Renamer Pro</li>
+            <li>Live rename preview column before you apply</li>
+            <li>Add audio tracks: Mono, Stereo, or Adaptive — with color</li>
+            <li>Add video tracks with color</li>
+            <li>Delete tracks with full undo support</li>
+            <li>Right-click any track to set color from a palette</li>
+            <li>Select All / Deselect All for bulk operations</li>
+            <li>Save and load track name sets as .txt files</li>
+            <li>Refresh re-fetches the current timeline — even if you switched in Resolve</li>
+            <li>Cmd+Z keyboard undo</li>
+          </ul>
+        </div>
+
+        <div class="tips-block">
+          <div class="tips-label">Pro Tips</div>
+
+          <div class="tip">
+            <div class="tip-title">Step Counter — same rule applies</div>
+            <div class="tip-body">Start:1, Step:10, Digits:3 → <code>010</code>, <code>020</code>, <code>030</code>. Great for <code>Dia_010</code>, <code>Dia_020</code> track naming.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">Switched timelines? Hit Refresh.</div>
+            <div class="tip-body">Track Command re-fetches the current project and timeline on Refresh — tracks update instantly even after switching.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">"After counter" on tracks too</div>
+            <div class="tip-body">Add: <code>_Boom</code>, position: "After counter" → <code>Dialogue_010_Boom</code>, <code>Dialogue_020_Lav</code> in one Apply.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Orange Rule ── -->
+  <div class="orange-rule"><hr /></div>
+
+  <!-- ── Features You'd Miss ── -->
+  <section class="features-section">
+    <div class="features-section-inner">
+      <div class="section-heading">
+        <h2>Features you'd miss without this page</h2>
+        <p>The non-obvious things that make each tool click.</p>
+      </div>
+
+      <div class="tiles-grid">
+
+        <div class="tile">
+          <div class="tile-icon text-icon">⌘Z</div>
+          <div class="tile-content">
+            <div class="tile-title">Cmd+Z Undo</div>
+            <div class="tile-desc">Works in all three apps from any field — undo your last rename batch in a single keystroke.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon text-icon">★</div>
+          <div class="tile-content">
+            <div class="tile-title">Start × Step counter</div>
+            <div class="tile-desc">Counter = Start × Step. Start:1 Step:10 → <code>010</code> <code>020</code> <code>030</code>. The first number is never 1 unless Step is 1.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">↺</div>
+          <div class="tile-content">
+            <div class="tile-title">Auto-refresh on focus</div>
+            <div class="tile-desc">All apps reload data when you click back in from Resolve — no manual refresh needed after making changes.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">⚡</div>
+          <div class="tile-content">
+            <div class="tile-title">After counter position</div>
+            <div class="tile-desc">Place add-text after the counter number — not just before or after the full name. <code>Shot_010_VFX</code> in one pass.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">🎨</div>
+          <div class="tile-content">
+            <div class="tile-title">Track colors — coming soon</div>
+            <div class="tile-desc">Right-click track color assignment is planned for a future update, pending Blackmagic exposing track color read/write in the DaVinci Resolve scripting API.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">↩</div>
+          <div class="tile-content">
+            <div class="tile-title">Restore Original</div>
+            <div class="tile-desc">All apps remember the original names from when you opened them. One click to restore everything.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">📋</div>
+          <div class="tile-content">
+            <div class="tile-title">Save/Load track names</div>
+            <div class="tile-desc">Track Command exports and re-imports track name sets as <code>.txt</code> files — reuse your layouts across projects.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">🔍</div>
+          <div class="tile-content">
+            <div class="tile-title">Multi-filter markers</div>
+            <div class="tile-desc">Filter by keyword AND color simultaneously in Marker Madness — isolate exactly the markers you need on large timelines.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>Built for DaVinci Resolve &nbsp;<span>·</span>&nbsp; Free to use and share &nbsp;<span>·</span>&nbsp; Made with love for editors</p>
+  </footer>
+
+</body>
+</html>
