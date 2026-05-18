@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" width="1200" height="280">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d0d"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="accent-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e8692a;stop-opacity:0"/>
+      <stop offset="20%" style="stop-color:#e8692a;stop-opacity:1"/>
+      <stop offset="80%" style="stop-color:#e8692a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e8692a;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="280" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="2" fill="url(#accent-line)" opacity="0.6"/>
+
+  <line x1="48" y1="32" x2="68" y2="32" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="48" y1="32" x2="48" y2="52" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="1152" y1="32" x2="1132" y2="32" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="1152" y1="32" x2="1152" y2="52" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="48" y1="248" x2="68" y2="248" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="48" y1="248" x2="48" y2="228" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="1152" y1="248" x2="1132" y2="248" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+  <line x1="1152" y1="248" x2="1152" y2="228" stroke="#e8692a" stroke-width="1.5" opacity="0.5"/>
+
+  <text x="600" y="84" text-anchor="middle" font-family="monospace" font-size="11" font-weight="500" letter-spacing="4" fill="#888888">INCLUDING</text>
+  <text x="600" y="108" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" letter-spacing="1" fill="#e8692a">Clip Renamer Pro &#160;&#160;&amp;&#160;&#160; Track Command</text>
+
+  <text x="600" y="178" text-anchor="middle" font-family="sans-serif" font-size="64" font-weight="800" letter-spacing="-1" fill="#f0f0f0">Marker Madness&#160;<tspan fill="#e8692a">Suite</tspan></text>
+
+  <text x="600" y="222" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="400" letter-spacing="0.3" fill="#888888">Three free tools for DaVinci Resolve &#8212; built for editors who move fast.</text>
+</svg>
