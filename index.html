@@ -108,11 +108,11 @@
 
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 24px;
+      row-gap: 20px;
     }
 
-    @media (max-width: 900px) { .cards-grid { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } }
 
     .card {
@@ -121,9 +121,9 @@
       border-radius: var(--radius);
       padding: 32px 28px 28px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
     }
 
     .card:hover {
@@ -167,8 +167,6 @@
       color: #555555;
       margin-bottom: 10px;
     }
-
-    .card-features { flex: 1; }
 
     .features-batch {
       font-size: 11px;
@@ -357,8 +355,8 @@
   <!-- ── Hero ── -->
   <section class="hero">
     <h1>Marker Madness <span>Suite</span></h1>
-    <p class="hero-includes">including &nbsp;<span>Clip Renamer Pro</span>&nbsp; &amp; &nbsp;<span>Track Command</span></p>
-    <p class="hero-subtitle">Three free tools for DaVinci Resolve — built for editors who move fast.</p>
+    <p class="hero-includes">including &nbsp;<span>Clip Renamer Pro</span>&nbsp; ·&nbsp;<span>Track Command</span>&nbsp; ·&nbsp;<span>Reel Time Plus</span></p>
+    <p class="hero-subtitle">Four free tools for film and TV editors — built for people who move fast.</p>
     <p class="hero-meta">v2026 &nbsp;·&nbsp; Free &nbsp;·&nbsp; Open Source</p>
   </section>
 
@@ -383,7 +381,10 @@
             <li>Sort and filter by color, keyword, or timecode range</li>
             <li>Batch rename with find/replace, prefix/suffix, case, trim, and counter</li>
             <li>Right-click the color swatch to change color; right-click name or note to edit</li>
-            <li>Copy markers across timelines and paste at playhead</li>
+            <li>Copy markers across timelines and paste at playhead — choose Timeline Ruler or a specific clip track</li>
+            <li>Shot Change Report — diff two CSV exports to instantly see which VFX shots changed, were dropped, or are new</li>
+            <li>Marker Exchange — export to Adobe Premiere Pro or Avid Media Composer and import back in one step; colors mapped automatically</li>
+            <li>Drag column headings to reorder — order saves between sessions and carries to CSV exports</li>
             <li>Float on Top keeps the window visible over Resolve</li>
             <li>Auto-refreshes when you click back in</li>
           </ul>
@@ -406,6 +407,11 @@
             <div class="tip-title">Marker Renamer auto-refreshes</div>
             <div class="tip-body">Select different markers, click back into the Renamer panel — preview updates automatically to reflect your new selection.</div>
           </div>
+
+          <div class="tip">
+            <div class="tip-title">Shot Change Report — VFX change notices in seconds</div>
+            <div class="tip-body">Export a CSV before the editor makes cuts, then another after. Load both into Shot Change Report for an instant diff: which shots got longer, shorter, dropped, or are new. Export as a printable HTML report for production meetings.</div>
+          </div>
         </div>
       </div>
 
@@ -417,7 +423,7 @@
           <div class="card-one-liner">Batch Rename Media Pool Clips And Timelines With Live Preview.</div>
         </div>
 
-        <div>
+        <div class="card-features">
           <div class="features-label">Features</div>
           <ul class="features-list">
             <li>Rename clips, timelines, or both in one pass</li>
@@ -459,7 +465,7 @@
           <div class="card-one-liner">Rename, Recolor, And Manage Tracks In The Current Timeline.</div>
         </div>
 
-        <div>
+        <div class="card-features">
           <div class="features-label">Features</div>
           <ul class="features-list">
             <li>Audio Tracks | Video Tracks | Rename Operations — three-column layout</li>
@@ -496,6 +502,49 @@
         </div>
       </div>
 
+      <!-- Card 4: Reel Time Plus -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-tag">Tool 04</div>
+          <div class="card-title">Reel Time Plus</div>
+          <div class="card-one-liner">Running Time Calculator For TV And Film Editors.<br>Know Your Over/Under Before The Cut Locks.</div>
+        </div>
+
+        <div class="card-features">
+          <div class="features-label">Features</div>
+          <ul class="features-list">
+            <li>Create named show projects — acts, reels, or any segment structure</li>
+            <li>Set a goal time and see over/under live as you edit</li>
+            <li>Proportional segment bar — each act's share of runtime at a glance</li>
+            <li>TV breaks: auto-adds (N−1) commercial breaks between acts</li>
+            <li>Film leader: whole-show or per-reel head and tail leader</li>
+            <li>Enter durations as timecode or raw frames — toggle per segment</li>
+            <li>11 frame rates including 23.98 NDF, 29.97 DF, and 59.94</li>
+            <li>FPS locked after creation to keep all frame counts consistent</li>
+            <li>Fully standalone — no DaVinci Resolve connection required</li>
+          </ul>
+        </div>
+
+        <div class="tips-block">
+          <div class="tips-label">Pro Tips</div>
+
+          <div class="tip">
+            <div class="tip-title">FPS is locked — choose before you start</div>
+            <div class="tip-body">Frame rate cannot be changed after project creation. Wrong FPS? Start a new project — all frame counts are stored relative to the chosen FPS.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">Whole Show vs Per Segment leader</div>
+            <div class="tip-body">Whole Show adds one head + tail for the entire deliverable. Per Segment adds leader to every reel individually — right for DI delivery, wrong for broadcast.</div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-title">TV breaks: the N−1 rule</div>
+            <div class="tip-body">Breaks = acts minus one. A four-act show gets three commercial breaks, not four. Set the break duration once and Reel Time Plus handles the math.</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -516,7 +565,7 @@
           <div class="tile-icon text-icon">⌘Z</div>
           <div class="tile-content">
             <div class="tile-title">Cmd+Z Undo</div>
-            <div class="tile-desc">Works in all three apps from any field — undo your last rename batch in a single keystroke.</div>
+            <div class="tile-desc">Works in all apps from any field — undo your last rename batch or restore original names in a single keystroke.</div>
           </div>
         </div>
 
@@ -545,10 +594,10 @@
         </div>
 
         <div class="tile">
-          <div class="tile-icon">🎨</div>
+          <div class="tile-icon">🔄</div>
           <div class="tile-content">
-            <div class="tile-title">Track colors — coming soon</div>
-            <div class="tile-desc">Right-click track color assignment is planned for a future update, pending Blackmagic exposing track color read/write in the DaVinci Resolve scripting API.</div>
+            <div class="tile-title">Marker Exchange — Premiere &amp; Avid</div>
+            <div class="tile-desc">Export Resolve markers to Adobe Premiere Pro (CSV) or Avid Media Composer (locator .txt) and import back in one step. Avid locator colors map to the nearest Resolve color automatically.</div>
           </div>
         </div>
 
@@ -573,6 +622,38 @@
           <div class="tile-content">
             <div class="tile-title">Multi-filter markers</div>
             <div class="tile-desc">Filter by keyword AND color simultaneously in Marker Madness — isolate exactly the markers you need on large timelines.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">📊</div>
+          <div class="tile-content">
+            <div class="tile-title">Shot Change Report</div>
+            <div class="tile-desc">Load two marker CSV exports and get an instant VFX change report — duration diffs, dropped shots, new shots — color-coded and exportable as HTML or CSV.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">🎬</div>
+          <div class="tile-content">
+            <div class="tile-title">Built for VFX workflows</div>
+            <div class="tile-desc">Name VFX shots with the step counter, copy markers across editorial cuts, paste onto specific clip tracks, and track every shot change between editorial versions.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">⏱️</div>
+          <div class="tile-content">
+            <div class="tile-title">Standalone runtime calculator</div>
+            <div class="tile-desc">Reel Time Plus needs no DaVinci Resolve connection — run it any time to track show length, check delivery specs, or plan act structure before you even open a timeline.</div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="tile-icon">📺</div>
+          <div class="tile-content">
+            <div class="tile-title">TV breaks &amp; film leader built in</div>
+            <div class="tile-desc">Reel Time Plus adds (N−1) commercial breaks automatically, or head/tail leader per-reel or whole-show. Total runtime always reflects your actual delivery length.</div>
           </div>
         </div>
 
