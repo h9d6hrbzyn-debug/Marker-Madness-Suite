@@ -299,6 +299,7 @@ class Clipper:
         self._order_var        = tk.BooleanVar(value=False)  # preserve timeline order prefix
         self._order_mode_var   = tk.StringVar(value="seq")   # "seq" (T01_) | "tc" (timecode)
         self._video_only_var   = tk.BooleanVar(value=False)  # strip audio tracks from created timelines
+        self._show_summary_var = tk.BooleanVar(value=True)   # show completion dialog after each run
 
         # internal data
         self._track_list        = []   # [(label, ttype, tidx, clip_count)]
@@ -706,9 +707,20 @@ class Clipper:
                        activebackground=BG, selectcolor=ENTRY_BG,
                        font=F_MAIN).pack(side="left")
 
+        # Row 13 — completion dialog toggle
+        opts_frame3 = tk.Frame(cf, bg=BG)
+        opts_frame3.grid(row=13, column=0, columnspan=3, sticky="w", pady=(2, 6))
+
+        tk.Checkbutton(opts_frame3,
+                       text="Show completion summary",
+                       variable=self._show_summary_var,
+                       fg=DIM, bg=BG, activeforeground=TEXT,
+                       activebackground=BG, selectcolor=ENTRY_BG,
+                       font=F_MAIN).pack(side="left")
+
         # Separator
         tk.Frame(cf, bg=BTN_HOV, height=1).grid(
-            row=13, column=0, columnspan=3, sticky="ew", pady=(4, 0))
+            row=14, column=0, columnspan=3, sticky="ew", pady=(0, 0))
 
     def _build_preview(self):
         pf = tk.Frame(self.root, bg=BG)
@@ -1761,7 +1773,9 @@ class Clipper:
                     if k != "recordFrame"}
 
         new_tl = None
-        for tag, end_adj in [("incl", 0), ("excl+1", 1)]:
+        # Use exclusive endFrame convention (consistent with CreateSubClip and
+        # AppendToTimeline) so the first clip gets its correct last frame.
+        for tag, end_adj in [("excl+1", 1), ("incl", 0)]:
             adj = {**first_ci, "endFrame": first_ci["endFrame"] + end_adj}
             try:
                 new_tl = self._media_pool.CreateTimelineFromClips(seq_name, [adj])
@@ -1866,12 +1880,14 @@ class Clipper:
 
         self._end_batch()
 
+        aborted_seq = self._abort_flag
         self._log(f"✓  '{seq_name}' → '{bin_name}'")
-        messagebox.showinfo("Done",
-            f"Created:\n{seq_name}\n\nBin: {bin_name}\n\n"
-            f"Clips placed: {appended} of {len(clip_infos)}"
-            + (f"\nSkipped (no media): {skipped_mpi}" if skipped_mpi else ""),
-            parent=self.root)
+        if self._show_summary_var.get() or aborted_seq:
+            messagebox.showinfo("Done",
+                f"Created:\n{seq_name}\n\nBin: {bin_name}\n\n"
+                f"Clips placed: {appended} of {len(clip_infos)}"
+                + (f"\nSkipped (no media): {skipped_mpi}" if skipped_mpi else ""),
+                parent=self.root)
 
         self._schedule_preview()
 
@@ -2171,13 +2187,15 @@ class Clipper:
                 used_fallback = False
 
                 # ── Try PATH A (CreateSubClip) ────────────────────────────
+                # CreateSubClip uses exclusive endFrame convention — try excl+1
+                # first so every subclip gets its correct last frame.
                 for tag, clip_info in [
-                    ("incl",  {"mediaPoolItem": mpi, "startFrame": row["src_in"],
-                               "endFrame": row["src_out"],     "clipName": final_name}),
                     ("excl+1",{"mediaPoolItem": mpi, "startFrame": row["src_in"],
                                "endFrame": row["src_out"] + 1, "clipName": final_name}),
+                    ("incl",  {"mediaPoolItem": mpi, "startFrame": row["src_in"],
+                               "endFrame": row["src_out"],     "clipName": final_name}),
                     ("no-nm", {"mediaPoolItem": mpi, "startFrame": row["src_in"],
-                               "endFrame": row["src_out"]}),
+                               "endFrame": row["src_out"] + 1}),
                 ]:
                     try:
                         result = self._media_pool.CreateSubClip(clip_info)
@@ -2194,8 +2212,8 @@ class Clipper:
                     self._log(f"  PATH A failed — trying PATH B fallback for '{final_name}'")
                     fb_info = [{"mediaPoolItem": mpi,
                                 "startFrame":   row["src_in"],
-                                "endFrame":     row["src_out"]}]
-                    for tag, end_adj in [("incl", 0), ("excl+1", 1)]:
+                                "endFrame":     row["src_out"] + 1}]
+                    for tag, end_adj in [("excl+1", 0), ("incl", -1)]:
                         fb_info[0]["endFrame"] = row["src_out"] + end_adj
                         try:
                             result = self._media_pool.CreateTimelineFromClips(
@@ -2286,11 +2304,11 @@ class Clipper:
 
                 clip_info = [{"mediaPoolItem": mpi,
                               "startFrame":   row["src_in"],
-                              "endFrame":     row["src_out"]}]
+                              "endFrame":     row["src_out"] + 1}]
                 result = None
-                # Try inclusive then exclusive endFrame
-                for tag, end_f in [("incl", row["src_out"]),
-                                   ("excl+1", row["src_out"] + 1)]:
+                # Try exclusive endFrame first (consistent with CreateSubClip convention)
+                for tag, end_f in [("excl+1", row["src_out"] + 1),
+                                   ("incl", row["src_out"])]:
                     clip_info[0]["endFrame"] = end_f
                     try:
                         result = self._media_pool.CreateTimelineFromClips(
@@ -2363,7 +2381,9 @@ class Clipper:
                 summary += f"\n  … and {len(errors) - 10} more"
 
         title = "Aborted" if aborted else "Complete"
-        messagebox.showinfo(title, summary, parent=self.root)
+        # Show dialog if: user wants it, OR something went wrong (always surface problems)
+        if self._show_summary_var.get() or aborted or failed:
+            messagebox.showinfo(title, summary, parent=self.root)
         self._log(f"{status_word} ({label}) — {added} added, {skipped} skipped, {failed} failed.")
         self._schedule_preview()
 
