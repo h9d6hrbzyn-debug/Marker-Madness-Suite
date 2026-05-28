@@ -1817,7 +1817,9 @@ class Clipper:
             for i, ci in enumerate(clip_infos[1:], 1):
                 ci_clean = {k: v for k, v in ci.items() if k != "recordFrame"}
                 ok = False
-                for tag, end_adj in [("incl", 0), ("excl+1", 1)]:
+                # AppendToTimeline uses exclusive endFrame (unlike CreateTimelineFromClips
+                # which uses inclusive). Always add 1 to avoid accumulating 1-frame shortfall.
+                for tag, end_adj in [("excl+1", 1), ("incl", 0)]:
                     adj = {**ci_clean, "endFrame": ci_clean["endFrame"] + end_adj}
                     try:
                         r = self._media_pool.AppendToTimeline([adj])
@@ -2122,11 +2124,14 @@ class Clipper:
             """Return the Preserve-Timeline-Order prefix for this clip, or ''."""
             if not do_order:
                 return ""
-            # V-prefix only when "All tracks" is selected (clips come from multiple tracks)
             row_tt  = row.get("ttype", ttype)
             row_ti  = row.get("tidx",  tidx)
+            # Timecode mode: always include track prefix (V1_, A2_, etc.) so that
+            # separate single-track runs can be combined in one bin and sort correctly.
+            # Sequential mode: only include track prefix when All Tracks is active.
+            include_track = (order_mode == "tc" or ttype == "all")
             v_pfx   = (f"{'V' if row_tt == 'video' else 'A'}{row_ti}_"
-                       if ttype == "all" else "")
+                       if include_track else "")
             if order_mode == "tc":
                 tc_raw = frames_to_tc(row.get("tl_start_frame", 0), self._fps)
                 tc_str = tc_raw.replace(":", "-")
