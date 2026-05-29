@@ -1,4 +1,4 @@
-Marker Madness v1.4
+Marker Madness v1.4.1
 A DaVinci Resolve Script by Resolve Tools
 resolve-tools.com
 ──────────────────────────────────────────
@@ -10,12 +10,19 @@ single panel. Export to HTML or CSV, detect shot changes between two
 exports, and exchange markers bidirectionally with Premiere Pro and
 Avid Media Composer.
 
+NEW IN 1.4.1
+• Fixed: Copy & Paste Markers now correctly pastes all selected markers
+  (previously only one marker would paste due to an internal clipboard bug)
+• Copy & Paste works across timelines, tracks, and even across projects
+• Cosmetic: Batch Rename button now matches toolbar style
+• Cosmetic: Reset Column Layout button now matches toolbar height
+
 REQUIREMENTS
 • DaVinci Resolve 18 or later
 • macOS
 
 INSTALLATION
-1. Copy "Marker Madness 1.4.py" to:
+1. Copy "Marker Madness 1.4.1.py" to:
    ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/
    Fusion/Scripts/Utility/
 
@@ -25,7 +32,7 @@ INSTALLATION
 
 LAUNCH
 From the Resolve menu bar:
-   Workspace → Scripts → Utility → Marker Madness 1.4
+   Workspace → Scripts → Utility → Marker Madness 1.4.1
 
 FULL DOCUMENTATION
    resolve-tools.com/marker-madness-guide

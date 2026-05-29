@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marker Madness 1.4 — DaVinci Resolve Marker Manager
+Marker Madness 1.4.1 — DaVinci Resolve Marker Manager
 ====================================================
 A GUI tool to view, add, edit, delete, and export both timeline markers
 and clip-based markers in your current DaVinci Resolve timeline.
@@ -4038,7 +4038,7 @@ class ExportFrameOptionsDialog(tk.Toplevel):
 # ---------------------------------------------------------------------------
 
 APP_TITLE   = "Marker Madness"
-APP_VERSION = "1.4"
+APP_VERSION = "1.4.1"
 
 class MarkerMadness:
     def __init__(self, root: tk.Tk):
@@ -4301,7 +4301,7 @@ class MarkerMadness:
         TBtn(tb1, text="✎ Edit",           command=self._edit_marker,
              bg=ACCENT, fg=BG).pack(side="left", padx=3)
         TBtn(tb1, text="⚡ Batch Rename",   command=self._open_renamer,
-             bg=PURPLE, fg=BG, font=("Avenir Next", 13, "bold")).pack(side="left", padx=3)
+             bg=PURPLE, fg=BG).pack(side="left", padx=3)
 
         TBtn(tb1, text="✕ Delete",         command=self._delete_marker,
              bg=RED, fg=BG).pack(side="left", padx=3)
@@ -4417,7 +4417,7 @@ class MarkerMadness:
                        selectcolor=ENTRY_BG, font=F_SMALL).pack(side="right", padx=(0, 2))
         tk.Frame(tb2, bg=BTN_HOV, width=1).pack(side="right", fill="y", padx=8)
         TBtn(tb2, text="↺ Reset Column Layout", command=self._reset_layout,
-             bg=BTN, fg=DIM, padx=6, pady=2).pack(side="right", padx=3)
+             bg=BTN, fg=DIM).pack(side="right", padx=3)
 
         # Toolbar row 3 — reports / exchange
         tb3 = tk.Frame(self.root, bg=BG, pady=2)
@@ -4850,6 +4850,7 @@ class MarkerMadness:
                     timeline, tl_frame,
                     entry["color"], entry["name"], entry["note"], entry["duration"]
                 )
+                obj      = timeline
                 frame_id = tl_frame
             else:
                 clip_item = self._find_clip_at_frame(
@@ -4861,6 +4862,7 @@ class MarkerMadness:
                         timeline, tl_frame,
                         entry["color"], entry["name"], entry["note"], entry["duration"]
                     )
+                    obj      = timeline
                     frame_id = tl_frame
                 else:
                     try:
@@ -4872,6 +4874,7 @@ class MarkerMadness:
                         clip_item, frame_id,
                         entry["color"], entry["name"], entry["note"], entry["duration"], ""
                     )
+                    obj      = clip_item
             if ok:
                 added += 1
                 self._tl_frames.add(tl_frame)
