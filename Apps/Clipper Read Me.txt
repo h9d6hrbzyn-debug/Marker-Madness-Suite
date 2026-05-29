@@ -1,0 +1,33 @@
+Clipper v1.2
+A DaVinci Resolve Script by Resolve Tools
+resolve-tools.com
+──────────────────────────────────────────
+
+WHAT IT DOES
+Clipper turns your timeline markers into individual sub-clips or complete
+sequences in one click. Set in/out points with a marker pair, name your
+destination bin, and Clipper does the rest — with optional handle padding,
+timeline ordering prefixes, and multi-track support.
+
+REQUIREMENTS
+• DaVinci Resolve 18 or later
+• macOS
+
+INSTALLATION
+1. Copy "Clipper 1.2.py" to:
+   ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/
+   Fusion/Scripts/Utility/
+
+   (Create the Utility folder if it doesn't exist.)
+
+2. Restart DaVinci Resolve if it is already running.
+
+LAUNCH
+From the Resolve menu bar:
+   Workspace → Scripts → Utility → Clipper 1.2
+
+FULL DOCUMENTATION
+   resolve-tools.com/clipper-guide
+
+QUESTIONS OR FEEDBACK
+   resolve-tools.com/feedback

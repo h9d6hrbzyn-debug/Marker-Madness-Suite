@@ -1,0 +1,36 @@
+Reel Time Plus v1.2
+A DaVinci Resolve Script by Resolve Tools
+resolve-tools.com
+──────────────────────────────────────────
+
+WHAT IT DOES
+Reel Time Plus is a timecode calculator and reel timer designed for
+editors and DITs. Track multiple projects, calculate running times with
+break deductions, and work in any timecode format — all without leaving
+your workspace.
+
+NOTE: This is the Resolve Script (.py) version. A standalone app for
+macOS and Windows is also available at resolve-tools.com/reel-time-plus.
+
+REQUIREMENTS
+• DaVinci Resolve 18 or later (for the script version)
+• macOS
+
+INSTALLATION
+1. Copy "Reel Time Plus 1.2.py" to:
+   ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/
+   Fusion/Scripts/Utility/
+
+   (Create the Utility folder if it doesn't exist.)
+
+2. Restart DaVinci Resolve if it is already running.
+
+LAUNCH
+From the Resolve menu bar:
+   Workspace → Scripts → Utility → Reel Time Plus 1.2
+
+FULL DOCUMENTATION
+   resolve-tools.com/reel-time-plus-guide
+
+QUESTIONS OR FEEDBACK
+   resolve-tools.com/feedback

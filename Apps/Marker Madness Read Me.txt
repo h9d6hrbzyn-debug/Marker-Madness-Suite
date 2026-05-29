@@ -1,0 +1,34 @@
+Marker Madness v1.4
+A DaVinci Resolve Script by Resolve Tools
+resolve-tools.com
+──────────────────────────────────────────
+
+WHAT IT DOES
+Marker Madness is a full-featured marker manager for DaVinci Resolve.
+Add, edit, search, filter, color-code, and bulk-edit markers from a
+single panel. Export to HTML or CSV, detect shot changes between two
+exports, and exchange markers bidirectionally with Premiere Pro and
+Avid Media Composer.
+
+REQUIREMENTS
+• DaVinci Resolve 18 or later
+• macOS
+
+INSTALLATION
+1. Copy "Marker Madness 1.4.py" to:
+   ~/Library/Application Support/Blackmagic Design/DaVinci Resolve/
+   Fusion/Scripts/Utility/
+
+   (Create the Utility folder if it doesn't exist.)
+
+2. Restart DaVinci Resolve if it is already running.
+
+LAUNCH
+From the Resolve menu bar:
+   Workspace → Scripts → Utility → Marker Madness 1.4
+
+FULL DOCUMENTATION
+   resolve-tools.com/marker-madness-guide
+
+QUESTIONS OR FEEDBACK
+   resolve-tools.com/feedback
